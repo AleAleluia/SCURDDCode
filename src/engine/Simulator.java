@@ -337,28 +337,35 @@ public class Simulator {
         f[1] = b;
         f[2] = c;
         f[3] = d;
-        Simulator s = new Simulator(f);
-        Scanner scanner = new Scanner(System.in);
         
-        s.grid.printTeams();
-        s.grid.rollCharactersInitiative();
-        s.grid.printGrid();
-        boolean verifyA = grid.verifyVictory(grid.getTeamA());
-        boolean verifyB = grid.verifyVictory(grid.getTeamB());
-        while(true){
-        	verifyA = grid.verifyVictory(grid.getTeamA());
-        	verifyB = grid.verifyVictory(grid.getTeamB());
-        	if((verifyA) || (verifyB)){
-        		break;
-        	}
-        	grid.callTurn();
-        	s.grid.printGrid();
-            scanner.nextLine();
-        }
-        if(verifyA){
-        	System.out.println("TeamB ganhou");
-        }else{
-        	System.out.println("TeamA ganhou");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite o numero de simulacoes:" );
+        int simulations = scanner.nextInt();
+     
+        //s.grid.printGrid();
+        boolean verifyA = false;
+        boolean verifyB = false;
+        for(int i = 1; i <= simulations; i++){
+        	System.out.println("\nSIMULACAO " + i + "\n");
+        	Simulator s = new Simulator(f);
+        	s.grid.printTeams();
+            s.grid.rollCharactersInitiative();
+            //s.grid.printGrid();
+	        while(true){
+	        	verifyA = grid.verifyVictory(grid.getTeamA());
+	        	verifyB = grid.verifyVictory(grid.getTeamB());
+	        	if((verifyA) || (verifyB)){
+	        		break;
+	        	}
+	        	grid.callTurn();
+	        	//s.grid.printGrid();
+	            //scanner.nextLine();
+	        }
+	        if(verifyA){
+	        	System.out.println("TeamB ganhou");
+	        }else{
+	        	System.out.println("TeamA ganhou");
+	        }
         }
     }
 }

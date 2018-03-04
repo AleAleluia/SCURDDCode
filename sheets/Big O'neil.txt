@@ -1,7 +1,7 @@
 Name: Big O'neil
 Role: 2
-HP: 90
-AC: 19
+HP: 60
+AC: 15
 Initiative: 6
 Size: l
 
@@ -14,24 +14,24 @@ Attacks:
 Name: Marretada "Treme-Terra"
 Range: 1
 Atk Bonus: 18 13 8
-Atk Dmg: 2d12+14
+Atk Dmg: 1d12+5
 Crit Chance: 20
 Crit Mult: 3
-Extra Dmg: 1d8+5
+Extra Dmg: 1d8+2
 
 Name: Besta, A Besta Bestial
 Range: 6
 Atk Bonus: 9 4
-Atk Dmg: 1d12+5
+Atk Dmg: 1d10+1
 Crit Chance: 19
 Crit Mult: 3
-Extra Dmg: 3d4+0
+Extra Dmg: 1d4+0
 
 Spells:
 Name: Magia Curativa que Costuma Curar
 Range: 1
 Cast Time: standard
 Type: 1
-Effect: 3d8+12
+Effect: 1d8+5
 Save: n
 Save DC: 0

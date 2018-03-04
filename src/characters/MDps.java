@@ -259,7 +259,7 @@ public class MDps extends Character {
 		Attack chosenAttack = null;
 		for(int i = 0; i< this.attacks.size(); i++){
 			if (((Math.abs(this.getPositionX() - enemy.getPositionX())) <= attacks.get(i).getRange()) && (Math.abs(this.getPositionY() - enemy.getPositionY()) <= attacks.get(i).getRange())){
-				System.out.println(this.getPositionX() - enemy.getPositionX() + "RANGE: " + attacks.get(i).getRange());
+				//System.out.println(this.getPositionX() - enemy.getPositionX() + "RANGE: " + attacks.get(i).getRange());
 				if(attacks.get(i).mean() > mean){
 					chosenAttack = attacks.get(i);
 					mean = chosenAttack.mean();
@@ -349,7 +349,7 @@ public class MDps extends Character {
 			}
 		}
 		// Para saber o valor de cada estrategia ao fim dos calculos de cada rodada (APAGAR)
-		System.out.println("////////\n" +
+		/*System.out.println("////////\n" +
 						   moveToAlly + "\n" +
 						   moveToEnemy + "\n" +
 						   attack + "\n" +
@@ -358,7 +358,7 @@ public class MDps extends Character {
 						   enemyHeal + "\n" +
 						   enemyAttack + "\n" +
 						   "////////\n" +
-						   choosenStrategy);
+						   choosenStrategy);*/
 		
 		switch(choosenStrategy){
 		default: // moveToAlly

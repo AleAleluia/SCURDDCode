@@ -583,7 +583,7 @@ public class Support extends Character{
 				bestStrategy=6;
 			}
 		}
-		System.out.println("estrategia de fred:"+bestStrategy);
+		//System.out.println("estrategia de fred:"+bestStrategy);
 		switch(bestStrategy)
 		{
 		case 0:

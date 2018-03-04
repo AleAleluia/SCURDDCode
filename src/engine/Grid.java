@@ -143,7 +143,7 @@ public class Grid {
 
     public void callTurn(){
     	if(this.currentCharacter.getHp() >= 0){
-    		System.out.println(this.currentCharacter.getName()+" ira jogar");
+    		//System.out.println(this.currentCharacter.getName()+" ira jogar");
             this.currentCharacter.play();
             int i = this.turnSequence.indexOf(this.currentCharacter);
             if((i+1) >= this.turnSequence.size()){
@@ -219,12 +219,12 @@ public class Grid {
             }
         }
 
-        System.out.println("Turn Order:");
+        //System.out.println("Turn Order:");
         this.turnSequence = (ArrayList<Character>)charsOrder.clone();
         for(int i = 0; i < initArray.length; i++){
-            System.out.println(turnSequence.get(i).getName() + " (" + initArray[i] + ")");
+            //System.out.println(turnSequence.get(i).getName() + " (" + initArray[i] + ")");
         }
-        System.out.println("");
+        //System.out.println("");
 
         this.currentCharacter = this.turnSequence.get(0);
     }
