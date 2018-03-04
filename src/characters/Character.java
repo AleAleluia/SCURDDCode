@@ -165,7 +165,7 @@ public abstract class Character {
 			}
 		}
 		
-		for(int i = 0; i < grid.getTeamA().size(); i++){
+		/*for(int i = 0; i < grid.getTeamA().size(); i++){
 			if( grid.getTeamA().get(i).getName().equals(grid.getCurrentCharacter().getName()) ){
 				allies = grid.getTeamA();
 				enemies = grid.getTeamB();
@@ -181,7 +181,14 @@ public abstract class Character {
 		//Fills squares with ally with value -1
 		for(int i = 0; i < allies.size(); i++){
 			a[allies.get(i).getPositionX()][allies.get(i).getPositionY()] = -1;
-		}
+		}*/
+		
+		//Fills square with enemy or allies with value -1
+		for(int i=0; i < grid.getTeamA().size(); i++)
+			a[grid.getTeamA().get(i).getPositionX()][grid.getTeamA().get(i).getPositionY()] = -1;
+		
+		for(int i=0; i < grid.getTeamB().size(); i++)
+			a[grid.getTeamB().get(i).getPositionX()][grid.getTeamB().get(i).getPositionY()] = -1;
 		
 		xCurrent = xInitial;
 		yCurrent = yInitial;
@@ -243,69 +250,87 @@ public abstract class Character {
 		
 		return a;
 	}
-		
+	
 	// Moves to square (doesn't reach the enemy)
-	public Square maxDist(int a[][], int xEnd, int yEnd, int speed){
+	public int[] maxDist(int a[][], int xEnd, int yEnd, int speed){
 		
-		int dist = 30000;//infinito
+		/* Old code
+		 * int dist = 300;//infinito
 		int xAux = 0, yAux = 0;
+		int[] values = new int[2];*/
+				
+		int dist = 30000; //infinito
+		int xAux = 0, yAux = 0;
+		int[] values = new int[2];
+		int count = speed;
 		
-		if(((xEnd - 1) > -1) && (yEnd + 1) < a[0].length){
-			if( ( a[xEnd - 1][yEnd + 1] > 0 ) && ( a[xEnd - 1][yEnd + 1] < dist ) ){
-				dist = a[xEnd - 1][yEnd + 1];
-				xAux = xEnd - 1;
-				yAux = yEnd + 1;				
+		while(count>0){
+			if(((xEnd - 1) > -1) && (yEnd + 1) < a[0].length){
+				if( ( a[xEnd - 1][yEnd + 1] > 0 ) && ( a[xEnd - 1][yEnd + 1] < dist ) ){
+					dist = a[xEnd - 1][yEnd + 1];
+					xAux = xEnd - 1;
+					yAux = yEnd + 1;				
+				}
+			} if( ( (xEnd - 1) > -1 ) && ( (yEnd - 1) > -1 ) ){
+				if( ( a[xEnd - 1][yEnd - 1] > 0 ) && ( a[xEnd - 1][yEnd - 1] < dist ) ){
+					dist = a[xEnd - 1][yEnd - 1];
+					xAux = xEnd - 1;
+					yAux = yEnd - 1;
+				}			
+			} if( ( (xEnd - 1) > -1 ) ){
+				if( ( a[xEnd - 1][yEnd] > 0 ) && ( a[xEnd - 1][yEnd] < dist ) ){
+					dist = a[xEnd - 1][yEnd];
+					xAux = xEnd - 1;
+					yAux = yEnd;
+				}			
+			} if( ( (xEnd + 1) < a.length ) && ( (yEnd + 1) < a[0].length ) ){
+				if( ( a[xEnd + 1][yEnd + 1] > 0 ) && ( a[xEnd + 1][yEnd + 1] < dist ) ){
+					dist = a[xEnd + 1][yEnd + 1];
+					xAux = xEnd + 1;
+					yAux = yEnd + 1;
+				}
+			} if( ( (xEnd + 1) < a.length ) && ( (yEnd - 1) > -1) ){
+				if( ( a[xEnd + 1][yEnd - 1] > 0 ) && ( a[xEnd + 1][yEnd - 1] < dist ) ){
+					dist = a[xEnd + 1][yEnd - 1];
+					xAux = xEnd + 1;
+					yAux = yEnd - 1;
+				}
+			} if( ( (xEnd + 1) < a.length ) ){
+				if( ( a[xEnd + 1][yEnd] > 0 ) && ( a[xEnd + 1][yEnd] < dist ) ){
+					dist = a[xEnd + 1][yEnd];
+					xAux = xEnd + 1;
+					yAux = yEnd;
+				}
+			} if( (yEnd - 1) > -1){
+				if( ( a[xEnd][yEnd - 1] > 0 ) && ( a[xEnd][yEnd - 1] < dist ) ){
+					dist = a[xEnd][yEnd - 1];
+					xAux = xEnd;
+					yAux = yEnd - 1;
+				}
+			} if( (yEnd + 1) < a[0].length ){
+				if( ( a[xEnd][yEnd + 1] > 0 ) && ( a[xEnd][yEnd + 1] < dist ) ){
+					dist = a[xEnd][yEnd + 1];
+					xAux = xEnd;
+					yAux = yEnd + 1;
+				}
 			}
-		} if( ( (xEnd - 1) > -1 ) && ( (yEnd - 1) > -1 ) ){
-			if( ( a[xEnd - 1][yEnd - 1] > 0 ) && ( a[xEnd - 1][yEnd - 1] < dist ) ){
-				dist = a[xEnd - 1][yEnd - 1];
-				xAux = xEnd - 1;
-				yAux = yEnd - 1;
-			}			
-		} if( ( (xEnd - 1) > -1 ) ){
-			if( ( a[xEnd - 1][yEnd] > 0 ) && ( a[xEnd - 1][yEnd] < dist ) ){
-				dist = a[xEnd - 1][yEnd];
-				xAux = xEnd - 1;
-				yAux = yEnd;
-			}			
-		} if( ( (xEnd + 1) < a.length ) && ( (yEnd + 1) < a[0].length ) ){
-			if( ( a[xEnd + 1][yEnd + 1] > 0 ) && ( a[xEnd + 1][yEnd + 1] < dist ) ){
-				dist = a[xEnd + 1][yEnd + 1];
-				xAux = xEnd + 1;
-				yAux = yEnd + 1;
-			}
-		} if( ( (xEnd + 1) < a.length ) && ( (yEnd - 1) > -1) ){
-			if( ( a[xEnd + 1][yEnd - 1] > 0 ) && ( a[xEnd + 1][yEnd - 1] < dist ) ){
-				dist = a[xEnd + 1][yEnd - 1];
-				xAux = xEnd + 1;
-				yAux = yEnd - 1;
-			}
-		} if( ( (xEnd + 1) < a.length ) ){
-			if( ( a[xEnd + 1][yEnd] > 0 ) && ( a[xEnd + 1][yEnd] < dist ) ){
-				dist = a[xEnd + 1][yEnd];
-				xAux = xEnd + 1;
-				yAux = yEnd;
-			}
-		} if( (yEnd - 1) > -1){
-			if( ( a[xEnd][yEnd - 1] > 0 ) && ( a[xEnd][yEnd - 1] < dist ) ){
-				dist = a[xEnd][yEnd - 1];
-				xAux = xEnd;
-				yAux = yEnd - 1;
-			}
-		} if( (yEnd + 1) < a[0].length ){
-			if( ( a[xEnd][yEnd + 1] > 0 ) && ( a[xEnd][yEnd + 1] < dist ) ){
-				dist = a[xEnd][yEnd + 1];
-				xAux = xEnd;
-				yAux = yEnd + 1;
-			}
+			count--;
 		}
 					
-		
-		if(dist == speed){
-			return new Square(xAux, yAux, 1); //Returns the square that character stopped
+		values[0] = xAux;
+		values[1] = yAux;
+		return values;
+				
+		/* Old code
+		 * if(dist == speed){
+			//return new Square(xAux, yAux, 1); //Returns the square that character stopped
+			this.values[0] = xAux;
+			this.values[1] = yAux;
+			return values;
 		} else {
-			return maxDist(a, xAux, yAux, speed);
-		}
+			//return maxDist(a, xAux, yAux, speed);
+			maxDist(a, xAux, yAux, speed);
+		}*/
 				
 	}
 	
@@ -465,9 +490,10 @@ public abstract class Character {
 			this.setInitialPosition(square.getX(), square.getY());
 
 		} else {
-			Square square = this.maxDist(a, destinationCharacter.getPositionX(), destinationCharacter.getPositionY(),
-					this.getSpeed());
-
+			//Square square = this.maxDist(a, destinationCharacter.getPositionX(), destinationCharacter.getPositionY(),
+			//		this.getSpeed());
+			int[] value = this.maxDist(a, destinationCharacter.getPositionX(), destinationCharacter.getPositionY(), this.getSpeed());
+			Square square = new Square(value[0], value[1], 1);
 			square.setCharacter(this);
 			square.setMapFlag(0);
 
