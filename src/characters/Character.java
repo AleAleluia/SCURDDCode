@@ -136,38 +136,49 @@ public abstract class Character {
 
 	public int getRole(){return this.role;}
 	
+	public int getSpeed() {return this.speed;}
+	
+	public ArrayList<Attack> getAttacks() {return this.attacks;}
+	
+	// ################## MOVEMENT TEST ##################
+	
+	
+	
+	
 	public int[][] aStar(int xInitial, int yInitial){
+		
 		int xCurrent, yCurrent;
 		Square[][] square = grid.getGridSquares();
 		int[][] a;
 		a = new int[square.length][square[0].length];
 		ArrayList<Character> allies = grid.getTeamA();
 		ArrayList<Character> enemies = grid.getTeamB();
-		Scanner scanner = new Scanner(System.in);
+		//Scanner scanner = new Scanner(System.in); (not used?)
 		
 		for(int i = 0; i < square.length; i++){
 			for(int j = 0; j < square[0].length; j++){
 				if(square[i][j].getMapFlag() == 1){
 					a[i][j] = 0;
-				}else{
+				} else{
 					a[i][j] = -1;
 				}
 			}
 		}
 		
 		for(int i = 0; i < grid.getTeamA().size(); i++){
-			if(grid.getTeamA().get(i).getName().equals(grid.getCurrentCharacter().getName())){
-				
+			if( grid.getTeamA().get(i).getName().equals(grid.getCurrentCharacter().getName()) ){
 				allies = grid.getTeamA();
 				enemies = grid.getTeamB();
 				break;
 			}
 		}
 		
+		//Fills square with enemy with value -1
 		for(int i = 0; i < enemies.size(); i++){
 			a[enemies.get(i).getPositionX()][enemies.get(i).getPositionY()] = -1;
 		}
 		
+		//Fills squares with ally with value -1
 		for(int i = 0; i < allies.size(); i++){
 			a[allies.get(i).getPositionX()][allies.get(i).getPositionY()] = -1;
 		}
@@ -185,265 +196,122 @@ public abstract class Character {
 			yCurrent = aux.getY();
 			a[xInitial][yInitial] = 0;
 			
-			if(((xCurrent - 1) > -1) && (yCurrent + 1) < a[0].length){
-				
+			if( ( (xCurrent - 1) > -1 ) && ( (yCurrent + 1) < a[0].length ) ){				
 				if(a[xCurrent - 1][yCurrent + 1] == 0){
-					
 					a[xCurrent -1][yCurrent + 1] = a[xCurrent][yCurrent] + 1;
 					queue.add(new Square(xCurrent - 1, yCurrent + 1, 1));
-					
 				}
-			}if(((xCurrent - 1) > -1) && (yCurrent - 1) > -1){
-				if(a[xCurrent - 1][yCurrent - 1] == 0){
-					
+			} if( ( (xCurrent - 1) > -1 ) && ( (yCurrent - 1) > -1 ) ){
+				if(a[xCurrent - 1][yCurrent - 1] == 0){					
 					a[xCurrent - 1][yCurrent - 1] = a[xCurrent][yCurrent] + 1;
 					queue.add(new Square(xCurrent - 1, yCurrent - 1, 1));
-					
-					
 				}
-				
-			}if(((xCurrent - 1) > -1)){
+			} if( ( (xCurrent - 1) > -1 ) ){
 				if(a[xCurrent - 1][yCurrent] == 0){
-					
 					a[xCurrent -1][yCurrent] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent - 1, yCurrent, 1));
-				
-					
-				}
-				
-			}if(((xCurrent + 1) < a.length) && ((yCurrent + 1) < a[0].length)){
-				if(a[xCurrent + 1][yCurrent + 1] == 0){
-					
+					queue.add(new Square(xCurrent - 1, yCurrent, 1));					
+				}				
+			} if( ( (xCurrent + 1) < a.length ) && ( (yCurrent + 1) < a[0].length ) ){
+				if(a[xCurrent + 1][yCurrent + 1] == 0){					
 					a[xCurrent + 1][yCurrent + 1] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent + 1, yCurrent + 1, 1));
-					
+					queue.add(new Square(xCurrent + 1, yCurrent + 1, 1));					
 				}
-			}if(((xCurrent + 1) < a.length) && ((yCurrent - 1) > -1)){
-				if(a[xCurrent + 1][yCurrent - 1] == 0){
-					
+			} if( ( (xCurrent + 1) < a.length ) && ( (yCurrent - 1) > -1) ){
+				if(a[xCurrent + 1][yCurrent - 1] == 0){					
 					a[xCurrent +1][yCurrent - 1] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent + 1, yCurrent - 1, 1));
-					
+					queue.add(new Square(xCurrent + 1, yCurrent - 1, 1));					
 				}
-			}if(((xCurrent + 1) < a.length)){
-				if(a[xCurrent + 1][yCurrent] == 0){
-					
+			} if( ( (xCurrent + 1) < a.length) ){
+				if(a[xCurrent + 1][yCurrent] == 0){					
 					a[xCurrent + 1][yCurrent] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent + 1, yCurrent, 1));
-					
+					queue.add(new Square(xCurrent + 1, yCurrent, 1));					
 				}
-			}if((yCurrent - 1) > -1){
-				if(a[xCurrent][yCurrent - 1] == 0){
-					
+			} if( (yCurrent - 1) > -1){
+				if(a[xCurrent][yCurrent - 1] == 0){					
 					a[xCurrent][yCurrent - 1] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent, yCurrent - 1, 1));
-					
+					queue.add(new Square(xCurrent, yCurrent - 1, 1));					
 				}
-			}if((yCurrent + 1) < a[0].length){
-				if(a[xCurrent][yCurrent + 1] == 0){
-					
+			} if( (yCurrent + 1) < a[0].length){
+				if(a[xCurrent][yCurrent + 1] == 0){					
 					a[xCurrent][yCurrent + 1] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent, yCurrent + 1, 1));
-					
+					queue.add(new Square(xCurrent, yCurrent + 1, 1));					
 				}
 			}
 			
 			a[xInitial][yInitial] = 0;
-			
 		}
 		
 		return a;
 	}
-	
-	public int[][] aStarGA(int xInitial, int yInitial,Grid testGrid){
-		int xCurrent, yCurrent;
-		Square[][] square = testGrid.getGridSquares();
-		int[][] a;
-		a = new int[square.length][square[0].length];
-		ArrayList<Character> allies = testGrid.getTeamA();
-		ArrayList<Character> enemies = testGrid.getTeamB();
-		Scanner scanner = new Scanner(System.in);
 		
-		for(int i = 0; i < square.length; i++){
-			for(int j = 0; j < square[0].length; j++){
-				if(square[i][j].getMapFlag() == 1){
-					a[i][j] = 0;
-				}else{
-					a[i][j] = -1;
-				}
-			}
-		}
-		
-		
-		allies = testGrid.getTeamA();
-		enemies = testGrid.getTeamB();
-		
-		for(int i = 0; i < enemies.size(); i++){
-			a[enemies.get(i).getPositionX()][enemies.get(i).getPositionY()] = -1;
-		}
-		
-		for(int i = 0; i < allies.size(); i++){
-			a[allies.get(i).getPositionX()][allies.get(i).getPositionY()] = -1;
-		}
-		
-		xCurrent = xInitial;
-		yCurrent = yInitial;
-		
-		Queue<Square> queue = new LinkedList<Square>();
-		queue.add(new Square(xInitial, yInitial,1));
-		
-		while(!queue.isEmpty()){
-			
-			Square aux = queue.poll();
-			xCurrent = aux.getX();
-			yCurrent = aux.getY();
-			a[xInitial][yInitial] = 0;
-			
-			if(((xCurrent - 1) > -1) && (yCurrent + 1) < a[0].length){
-				
-				if(a[xCurrent - 1][yCurrent + 1] == 0){
-					
-					a[xCurrent -1][yCurrent + 1] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent - 1, yCurrent + 1, 1));
-					
-				}
-			}if(((xCurrent - 1) > -1) && (yCurrent - 1) > -1){
-				if(a[xCurrent - 1][yCurrent - 1] == 0){
-					
-					a[xCurrent - 1][yCurrent - 1] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent - 1, yCurrent - 1, 1));
-					
-					
-				}
-				
-			}if(((xCurrent - 1) > -1)){
-				if(a[xCurrent - 1][yCurrent] == 0){
-					
-					a[xCurrent -1][yCurrent] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent - 1, yCurrent, 1));
-				
-					
-				}
-				
-			}if(((xCurrent + 1) < a.length) && ((yCurrent + 1) < a[0].length)){
-				if(a[xCurrent + 1][yCurrent + 1] == 0){
-					
-					a[xCurrent + 1][yCurrent + 1] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent + 1, yCurrent + 1, 1));
-					
-				}
-			}if(((xCurrent + 1) < a.length) && ((yCurrent - 1) > -1)){
-				if(a[xCurrent + 1][yCurrent - 1] == 0){
-					
-					a[xCurrent +1][yCurrent - 1] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent + 1, yCurrent - 1, 1));
-					
-				}
-			}if(((xCurrent + 1) < a.length)){
-				if(a[xCurrent + 1][yCurrent] == 0){
-					
-					a[xCurrent + 1][yCurrent] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent + 1, yCurrent, 1));
-					
-				}
-			}if((yCurrent - 1) > -1){
-				if(a[xCurrent][yCurrent - 1] == 0){
-					
-					a[xCurrent][yCurrent - 1] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent, yCurrent - 1, 1));
-					
-				}
-			}if((yCurrent + 1) < a[0].length){
-				if(a[xCurrent][yCurrent + 1] == 0){
-					
-					a[xCurrent][yCurrent + 1] = a[xCurrent][yCurrent] + 1;
-					queue.add(new Square(xCurrent, yCurrent + 1, 1));
-					
-				}
-			}
-			
-			a[xInitial][yInitial] = 0;
-			
-		}
-		
-		return a;
-	}
-	
-	public int getSpeed() {
-		return this.speed;
-	}
-	
+	// Moves to square (doesn't reach the enemy)
 	public Square maxDist(int a[][], int xEnd, int yEnd, int speed){
+		
 		int dist = 30000;//infinito
 		int xAux = 0, yAux = 0;
 		
-		
 		if(((xEnd - 1) > -1) && (yEnd + 1) < a[0].length){
-			
-			if(a[xEnd - 1][yEnd + 1] > 0 && a[xEnd - 1][yEnd + 1] < dist){
+			if( ( a[xEnd - 1][yEnd + 1] > 0 ) && ( a[xEnd - 1][yEnd + 1] < dist ) ){
 				dist = a[xEnd - 1][yEnd + 1];
 				xAux = xEnd - 1;
-				yAux = yEnd + 1;
-				
+				yAux = yEnd + 1;				
 			}
-		}if(((xEnd - 1) > -1) && (yEnd - 1) > -1){
-			if(a[xEnd - 1][yEnd - 1] > 0 && a[xEnd - 1][yEnd - 1] < dist){
+		} if( ( (xEnd - 1) > -1 ) && ( (yEnd - 1) > -1 ) ){
+			if( ( a[xEnd - 1][yEnd - 1] > 0 ) && ( a[xEnd - 1][yEnd - 1] < dist ) ){
 				dist = a[xEnd - 1][yEnd - 1];
 				xAux = xEnd - 1;
 				yAux = yEnd - 1;
-			}
-			
-		}if(((xEnd - 1) > -1)){
-			if(a[xEnd - 1][yEnd] > 0 && a[xEnd - 1][yEnd] < dist){
+			}			
+		} if( ( (xEnd - 1) > -1 ) ){
+			if( ( a[xEnd - 1][yEnd] > 0 ) && ( a[xEnd - 1][yEnd] < dist ) ){
 				dist = a[xEnd - 1][yEnd];
 				xAux = xEnd - 1;
 				yAux = yEnd;
-			}
-			
-		}if(((xEnd + 1) < a.length) && ((yEnd + 1) < a[0].length)){
-			if(a[xEnd + 1][yEnd + 1] > 0 && a[xEnd + 1][yEnd + 1] < dist){
+			}			
+		} if( ( (xEnd + 1) < a.length ) && ( (yEnd + 1) < a[0].length ) ){
+			if( ( a[xEnd + 1][yEnd + 1] > 0 ) && ( a[xEnd + 1][yEnd + 1] < dist ) ){
 				dist = a[xEnd + 1][yEnd + 1];
 				xAux = xEnd + 1;
 				yAux = yEnd + 1;
 			}
-		}if(((xEnd + 1) < a.length) && ((yEnd - 1) > -1)){
-			if(a[xEnd + 1][yEnd - 1] > 0 && a[xEnd + 1][yEnd - 1] < dist){
+		} if( ( (xEnd + 1) < a.length ) && ( (yEnd - 1) > -1) ){
+			if( ( a[xEnd + 1][yEnd - 1] > 0 ) && ( a[xEnd + 1][yEnd - 1] < dist ) ){
 				dist = a[xEnd + 1][yEnd - 1];
 				xAux = xEnd + 1;
 				yAux = yEnd - 1;
 			}
-		}if(((xEnd + 1) < a.length)){
-			if(a[xEnd + 1][yEnd] > 0 && a[xEnd + 1][yEnd] < dist){
+		} if( ( (xEnd + 1) < a.length ) ){
+			if( ( a[xEnd + 1][yEnd] > 0 ) && ( a[xEnd + 1][yEnd] < dist ) ){
 				dist = a[xEnd + 1][yEnd];
 				xAux = xEnd + 1;
 				yAux = yEnd;
 			}
-		}if((yEnd - 1) > -1){
-			if(a[xEnd][yEnd - 1] > 0 && a[xEnd][yEnd - 1] < dist){
+		} if( (yEnd - 1) > -1){
+			if( ( a[xEnd][yEnd - 1] > 0 ) && ( a[xEnd][yEnd - 1] < dist ) ){
 				dist = a[xEnd][yEnd - 1];
 				xAux = xEnd;
 				yAux = yEnd - 1;
 			}
-		}if((yEnd + 1) < a[0].length){
-			if(a[xEnd][yEnd + 1] > 0 && a[xEnd][yEnd + 1] < dist){
+		} if( (yEnd + 1) < a[0].length ){
+			if( ( a[xEnd][yEnd + 1] > 0 ) && ( a[xEnd][yEnd + 1] < dist ) ){
 				dist = a[xEnd][yEnd + 1];
 				xAux = xEnd;
 				yAux = yEnd + 1;
 			}
 		}
-		
-			
+					
 		
 		if(dist == speed){
-			return new Square(xAux, yAux, 1);
-		}else{
+			return new Square(xAux, yAux, 1); //Returns the square that character stopped
+		} else {
 			return maxDist(a, xAux, yAux, speed);
 		}
-		
-		
+				
 	}
 	
+	//Calculates the position of the character after he/she moves
 	public Square newPosition(int a[][], int xEnd, int yEnd, int speed){
+		
 		int dist = 30000;//infinito
 		int xAux = 0, yAux = 0;
 		
@@ -506,168 +374,172 @@ public abstract class Character {
 		
 		return square;
 	}
-	
-public int distanceTo( int xEnd, int yEnd){
-		
+
+	// Calculates the distance from current character to specified squared
+	public int distanceTo(int xEnd, int yEnd) {
+
 		int[][] a = this.aStar(this.getPositionX(), this.getPositionY());
-		int dist = 30000;//infinito
-		
-		//return a[xEnd][yEnd];
-		if(((xEnd - 1) > -1) && (yEnd + 1) < a[0].length){
-			if(a[xEnd - 1][yEnd + 1] > 0 && a[xEnd - 1][yEnd + 1] < dist){
+		int dist = 30000;// infinito
+
+		// return a[xEnd][yEnd];
+		if (((xEnd - 1) > -1) && (yEnd + 1) < a[0].length) {
+			if (a[xEnd - 1][yEnd + 1] > 0 && a[xEnd - 1][yEnd + 1] < dist) {
 				dist = a[xEnd - 1][yEnd + 1];
-			
 			}
-		}if(((xEnd - 1) > -1) && (yEnd - 1) > -1){
-			if(a[xEnd - 1][yEnd - 1] > 0 && a[xEnd - 1][yEnd - 1] < dist){
+		} 
+		if (((xEnd - 1) > -1) && (yEnd - 1) > -1) {
+			if (a[xEnd - 1][yEnd - 1] > 0 && a[xEnd - 1][yEnd - 1] < dist) {
 				dist = a[xEnd - 1][yEnd - 1];
 			}
-			
-		}if(((xEnd - 1) > -1)){
-			if(a[xEnd - 1][yEnd] > 0 && a[xEnd - 1][yEnd] < dist){
+		}
+		if (((xEnd - 1) > -1)) {
+			if (a[xEnd - 1][yEnd] > 0 && a[xEnd - 1][yEnd] < dist) {
 				dist = a[xEnd - 1][yEnd];
 			}
-			
-		}if(((xEnd + 1) < a.length) && ((yEnd + 1) < a[0].length)){
-			if(a[xEnd + 1][yEnd + 1] > 0 && a[xEnd + 1][yEnd + 1] < dist){
+		}
+		if (((xEnd + 1) < a.length) && ((yEnd + 1) < a[0].length)) {
+			if (a[xEnd + 1][yEnd + 1] > 0 && a[xEnd + 1][yEnd + 1] < dist) {
 				dist = a[xEnd + 1][yEnd + 1];
 			}
-		}if(((xEnd + 1) < a.length) && ((yEnd - 1) > -1)){
-			if(a[xEnd + 1][yEnd - 1] > 0 && a[xEnd + 1][yEnd - 1] < dist){
+		}
+		if (((xEnd + 1) < a.length) && ((yEnd - 1) > -1)) {
+			if (a[xEnd + 1][yEnd - 1] > 0 && a[xEnd + 1][yEnd - 1] < dist) {
 				dist = a[xEnd + 1][yEnd - 1];
 			}
-		}if(((xEnd + 1) < a.length)){
-			if(a[xEnd + 1][yEnd] > 0 && a[xEnd + 1][yEnd] < dist){
+		}
+		if (((xEnd + 1) < a.length)) {
+			if (a[xEnd + 1][yEnd] > 0 && a[xEnd + 1][yEnd] < dist) {
 				dist = a[xEnd + 1][yEnd];
 			}
-		}if((yEnd - 1) > -1){
-			if(a[xEnd][yEnd - 1] > 0 && a[xEnd][yEnd - 1] < dist){
+		}
+		if ((yEnd - 1) > -1) {
+			if (a[xEnd][yEnd - 1] > 0 && a[xEnd][yEnd - 1] < dist) {
 				dist = a[xEnd][yEnd - 1];
 			}
-		}if((yEnd + 1) < a[0].length){
-			if(a[xEnd][yEnd + 1] > 0 && a[xEnd][yEnd + 1] < dist){
+		}
+		if ((yEnd + 1) < a[0].length) {
+			if (a[xEnd][yEnd + 1] > 0 && a[xEnd][yEnd + 1] < dist) {
 				dist = a[xEnd][yEnd + 1];
 			}
 		}
+		
 		return dist;
 	}
 
-	public boolean allowedAction(int type){
-		if(type == 1 && this.availableActions[0]==1 ) { //aÃ§Ã£o do tipo full-round
+	//Verifies if the character can do specific action
+	public boolean allowedAction(int type) {
+		if (type == 1 && this.availableActions[0] == 1) { // action type: full-round
 			this.availableActions[0] = 0;
 			this.availableActions[1] = 0;
 			this.availableActions[2] = 0;
 			return true;
-		}
-		else if(type == 2 && this.availableActions[1]>0){ //aÃ§Ã£o do tipo standard
+		} else if (type == 2 && this.availableActions[1] > 0) { // action type: standard
 			this.availableActions[0] = 0;
 			this.availableActions[1] = this.availableActions[1] - 1;
 			return true;
-		}
-		else if(type == 3 && this.availableActions[2]>0){ //aÃ§Ã£o do tipo swift
+		} else if (type == 3 && this.availableActions[2] > 0) { // action type: swift
 			this.availableActions[0] = 0;
 			this.availableActions[2] = 0;
 			return true;
 		}
+		
 		return false;
 	}
-	
-	public void moveTo(Character destinationCharacter){
-		int[][] a = this.aStar(this.getPositionX(), this.getPositionY());
-		int dist = this.distanceTo( destinationCharacter.getPositionX(), destinationCharacter.getPositionY());
+
+	public void moveTo(Character destinationCharacter) {
 		
-		if(dist <= this.getSpeed()){
-			Square square = this.newPosition(a,destinationCharacter.getPositionX(), destinationCharacter.getPositionY(), this.getSpeed());
-			
-			square.setCharacter(this);
-			square.setMapFlag(0);
-			
-			grid.getGridSquares()[square.getX()][square.getY()] = square;
-			grid.getGridSquares()[this.getPositionX()][this.getPositionY()].setCharacter(null);
-			grid.getGridSquares()[this.getPositionX()][this.getPositionY()].setMapFlag(1);
-			
-			this.setInitialPosition(square.getX(), square.getY());
-			
-		}else{
-			Square square = this.maxDist(a,destinationCharacter.getPositionX(), destinationCharacter.getPositionY(), this.getSpeed());
+		int[][] a = this.aStar(this.getPositionX(), this.getPositionY());
+		int dist = this.distanceTo(destinationCharacter.getPositionX(), destinationCharacter.getPositionY());
+
+		if (dist <= this.getSpeed()) {
+			Square square = this.newPosition(a, destinationCharacter.getPositionX(),
+					destinationCharacter.getPositionY(), this.getSpeed());
 
 			square.setCharacter(this);
 			square.setMapFlag(0);
-			
+
+			grid.getGridSquares()[square.getX()][square.getY()] = square;
+			grid.getGridSquares()[this.getPositionX()][this.getPositionY()].setCharacter(null);
+			grid.getGridSquares()[this.getPositionX()][this.getPositionY()].setMapFlag(1);
+
+			this.setInitialPosition(square.getX(), square.getY());
+
+		} else {
+			Square square = this.maxDist(a, destinationCharacter.getPositionX(), destinationCharacter.getPositionY(),
+					this.getSpeed());
+
+			square.setCharacter(this);
+			square.setMapFlag(0);
+
 			grid.getGridSquares()[square.getX()][square.getY()] = square;
 			grid.getGridSquares()[this.getPositionX()][this.getPositionY()].setCharacter(null);
 			grid.getGridSquares()[this.getPositionX()][this.getPositionY()].setMapFlag(1);
 			this.setInitialPosition(square.getX(), square.getY());
-		
+
 		}
 	}
-	
-	public void resetActions(){
+
+	public void resetActions() {
 		this.availableActions[0] = 1;
 		this.availableActions[1] = 2;
-		this.availableActions[2] = 1;		
+		this.availableActions[2] = 1;
 	}
-	
-	public static int rollToHit(Character actor, Character target, Attack atk)
-	{
-		int roll = diceRoller(1,20,0);
+
+	public static int rollToHit(Character actor, Character target, Attack atk) {
+		int roll = diceRoller(1, 20, 0);
 		return roll;
 	}
-	public static void attackAction(Character actor, Character target, Attack atk)
-	{
-		int roll = rollToHit(actor,target,atk);
+
+	public static void attackAction(Character actor, Character target, Attack atk) {
+		int roll = rollToHit(actor, target, atk);
 		boolean crit = false;
-		if(roll>=atk.getCritChance())
-		{
-			crit =true;
+		if (roll >= atk.getCritChance()) {
+			crit = true;
 		}
-		
+
 		String[] parser = new String[3];
 		int[] atkbonus = atk.getAtkBonus();
 		int hitbonus = atkbonus[0];
 		roll = roll + hitbonus;
-		if(roll>=target.ac)
-		{
-			
-			//Separar os nÃºmeros do ataque.
+		if (roll >= target.ac) {
+
+			// Separar os números do ataque.
 			int typeOfDice, numberOfDice, modifier;
-			int i=0;
-			
+			int i = 0;
+
 			parser = atk.getAtkDmg().split("d");
 			numberOfDice = Integer.parseInt(parser[0]);
 			parser = parser[1].split("\\+");
 			typeOfDice = Integer.parseInt(parser[0]);
 			modifier = Integer.parseInt(parser[1]);
 
-			//rolar os dados
-			int damage = diceRoller(numberOfDice,typeOfDice,modifier);
-			if(crit)
-			{
-				damage = damage*atk.getCritMult();
+			// rolar os dados
+			int damage = diceRoller(numberOfDice, typeOfDice, modifier);
+			if (crit) {
+				damage = damage * atk.getCritMult();
 			}
-			//modificar HP do alvo e atualiza condiÃ§Ã£o
-			target.setHp(target.getHp()-damage);
+			// modificar HP do alvo e atualiza condição
+			target.setHp(target.getHp() - damage);
 			target.setCondition();
-			//imprimir
-			 System.out.println(target.getName()+" sofreu "+damage+" de dano para o "+atk.getName()+" de "+actor.getName());
+			// imprimir
+			System.out.println(target.getName() + " sofreu " + damage + " de dano para o " + atk.getName() + " de "
+					+ actor.getName());
 		}
-		
-		else
-		{
-			System.out.println(target.getName()+" nao foi acertado por "+actor.getName());
+
+		else {
+			System.out.println(target.getName() + " nao foi acertado por " + actor.getName());
 		}
-		
+
 	}
 
-	public static void magicAction(Character actor, Character target, Spell spell)
-	{
+	
+	public static void magicAction(Character actor, Character target, Spell spell) {
 		
-		if(spell==null)
-		{
+		if(spell==null) {
 			return;
 		}
 		
-		//Separar os nÃºmeros do ataque.
+		//Separar os numeros do ataque.
 		int typeOfDice, numberOfDice, modifier;
 		int i=0;
 		
@@ -679,67 +551,170 @@ public int distanceTo( int xEnd, int yEnd){
 		typeOfDice = Integer.parseInt(parser[0]);
 		modifier = Integer.parseInt(parser[1]);
 
-		//rolar o teste de resistÃªncia.
+		//rolar o teste de resistência.
 		boolean save = rollSave(spell,target);
 		//rolar os dados
 		int damage = diceRoller(numberOfDice,typeOfDice,modifier);
 		//caso tenha sucesso no save, diminui o dano pela metade.
-		if(save)
-		{
+		if(save) {
 			damage = damage/2;
 		}
 
 		//diminui o hp se for magia de dano, aumenta vida.
-		if(spell.getType()== '0')
-		{
+		if(spell.getType()== '0') {
 			target.setHp(target.getHp()-damage);
 			System.out.println(target.getName()+" sofreu "+damage+" de dano para o "+spell.getName()+" de "+actor.getName());
-		}
-		else
-		{
+		} else {
 			target.setHp(target.getHp()+damage);
 			System.out.println(target.getName()+" curou "+damage+" de dano com o "+spell.getName()+" de "+actor.getName());
 		}
 		target.setCondition();
 	}
 
-	public static boolean rollSave(Spell spell, Character target)
-	{
-		if(spell.getSave()=='n')
-		{
+	
+	public static boolean rollSave(Spell spell, Character target){
+		if(spell.getSave()=='n') {
 			return false;
-		}
-		else
-		{
-			if(spell.getSave()=='f')
-			{
+		} else {
+			if(spell.getSave()=='f') {
 				int roll = diceRoller(1,20,target.getFort());
-				if(roll>=spell.getSaveDC())
-				{
+				if(roll>=spell.getSaveDC()) {
 					return true;
 				}
 			}
-			if(spell.getSave()=='r')
-			{
+			if(spell.getSave()=='r') {
 				int roll = diceRoller(1,20,target.getRef());
-				if(roll>=spell.getSaveDC())
-				{
+				if(roll>=spell.getSaveDC())	{
 					return true;
 				}
-			}
-			else
-			{
+			} else {
 				int roll = diceRoller(1,20,target.getWill());
-				if(roll>=spell.getSaveDC())
-				{
+				if(roll>=spell.getSaveDC()) {
 					return true;
 				}
 			}
 		}
+		
 		return false;
 	}
 	
-	public ArrayList<Attack> getAttacks() {
-		return this.attacks;
+
+	// Created to calculate chromosome's value for genetic algorithm (not used)
+	public int[][] aStarGA(int xInitial, int yInitial, Grid testGrid) {
+		int xCurrent, yCurrent;
+		Square[][] square = testGrid.getGridSquares();
+		int[][] a;
+		a = new int[square.length][square[0].length];
+		ArrayList<Character> allies = testGrid.getTeamA();
+		ArrayList<Character> enemies = testGrid.getTeamB();
+		Scanner scanner = new Scanner(System.in);
+
+		for (int i = 0; i < square.length; i++) {
+			for (int j = 0; j < square[0].length; j++) {
+				if (square[i][j].getMapFlag() == 1) {
+					a[i][j] = 0;
+				} else {
+					a[i][j] = -1;
+				}
+			}
+		}
+
+		allies = testGrid.getTeamA();
+		enemies = testGrid.getTeamB();
+
+		for (int i = 0; i < enemies.size(); i++) {
+			a[enemies.get(i).getPositionX()][enemies.get(i).getPositionY()] = -1;
+		}
+
+		for (int i = 0; i < allies.size(); i++) {
+			a[allies.get(i).getPositionX()][allies.get(i).getPositionY()] = -1;
+		}
+
+		xCurrent = xInitial;
+		yCurrent = yInitial;
+
+		Queue<Square> queue = new LinkedList<Square>();
+		queue.add(new Square(xInitial, yInitial, 1));
+
+		while (!queue.isEmpty()) {
+
+			Square aux = queue.poll();
+			xCurrent = aux.getX();
+			yCurrent = aux.getY();
+			a[xInitial][yInitial] = 0;
+
+			if (((xCurrent - 1) > -1) && (yCurrent + 1) < a[0].length) {
+
+				if (a[xCurrent - 1][yCurrent + 1] == 0) {
+
+					a[xCurrent - 1][yCurrent + 1] = a[xCurrent][yCurrent] + 1;
+					queue.add(new Square(xCurrent - 1, yCurrent + 1, 1));
+
+				}
+			}
+			if (((xCurrent - 1) > -1) && (yCurrent - 1) > -1) {
+				if (a[xCurrent - 1][yCurrent - 1] == 0) {
+
+					a[xCurrent - 1][yCurrent - 1] = a[xCurrent][yCurrent] + 1;
+					queue.add(new Square(xCurrent - 1, yCurrent - 1, 1));
+
+				}
+
+			}
+			if (((xCurrent - 1) > -1)) {
+				if (a[xCurrent - 1][yCurrent] == 0) {
+
+					a[xCurrent - 1][yCurrent] = a[xCurrent][yCurrent] + 1;
+					queue.add(new Square(xCurrent - 1, yCurrent, 1));
+
+				}
+
+			}
+			if (((xCurrent + 1) < a.length) && ((yCurrent + 1) < a[0].length)) {
+				if (a[xCurrent + 1][yCurrent + 1] == 0) {
+
+					a[xCurrent + 1][yCurrent + 1] = a[xCurrent][yCurrent] + 1;
+					queue.add(new Square(xCurrent + 1, yCurrent + 1, 1));
+
+				}
+			}
+			if (((xCurrent + 1) < a.length) && ((yCurrent - 1) > -1)) {
+				if (a[xCurrent + 1][yCurrent - 1] == 0) {
+
+					a[xCurrent + 1][yCurrent - 1] = a[xCurrent][yCurrent] + 1;
+					queue.add(new Square(xCurrent + 1, yCurrent - 1, 1));
+
+				}
+			}
+			if (((xCurrent + 1) < a.length)) {
+				if (a[xCurrent + 1][yCurrent] == 0) {
+
+					a[xCurrent + 1][yCurrent] = a[xCurrent][yCurrent] + 1;
+					queue.add(new Square(xCurrent + 1, yCurrent, 1));
+
+				}
+			}
+			if ((yCurrent - 1) > -1) {
+				if (a[xCurrent][yCurrent - 1] == 0) {
+
+					a[xCurrent][yCurrent - 1] = a[xCurrent][yCurrent] + 1;
+					queue.add(new Square(xCurrent, yCurrent - 1, 1));
+
+				}
+			}
+			if ((yCurrent + 1) < a[0].length) {
+				if (a[xCurrent][yCurrent + 1] == 0) {
+
+					a[xCurrent][yCurrent + 1] = a[xCurrent][yCurrent] + 1;
+					queue.add(new Square(xCurrent, yCurrent + 1, 1));
+
+				}
+			}
+
+			a[xInitial][yInitial] = 0;
+
+		}
+
+		return a;
 	}
 }
