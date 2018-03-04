@@ -153,8 +153,18 @@ public class Grid {
             }
     	} else{
     		if(this.currentCharacter.getTeam() == 'a'){
+    			for(int i = 0; i < this.mailBoxA.size(); i++){  // Verifica se existe mensagem do personagem morto
+    				if(this.mailBoxA.get(i).getSender().equals(this.currentCharacter.getName())){
+    					this.mailBoxA.remove(i); // Se existir, remova-a
+    				}
+    			}
     			this.teamA.remove(this.currentCharacter);
     		} else{
+    			for(int i = 0; i < this.mailBoxB.size(); i++){ // Verifica se existe mensagem do personagem morto
+    				if(this.mailBoxB.get(i).getSender().equals(this.currentCharacter.getName())){
+    					this.mailBoxB.remove(i); // Se existir, remova-a
+    				}
+    			}
     			this.teamB.remove(this.currentCharacter);
     		}
     		this.gridSquares[this.currentCharacter.getPositionX()][this.currentCharacter.getPositionY()].leaveSquare();
