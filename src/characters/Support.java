@@ -34,10 +34,12 @@ public class Support extends Character{
 		
 		if(temp.size() > 1)
 			temp = CheckDistance(allies);
-		
-		Character target = temp.get(0);
-		
-		return target;
+		if(temp.size() > 0){
+			Character target = temp.get(0);
+			return target;
+		}else{
+			return null;
+		}
 	}
 	
 	
@@ -353,23 +355,25 @@ public class Support extends Character{
 		{
 			moveAndAttack = bestAttack.mean();
 		}
-		if(ally.getCondition()==3)//verifica se o aliado esta ferido e depois verifica sua distancia
-		{
-			if(Grid.distance(this,ally)>bestHeal.getRange())
+		if(ally != null){
+			if(ally.getCondition()==3)//verifica se o aliado esta ferido e depois verifica sua distancia
 			{
-				healAlly =-1000; //infinito negativo;
-			}
-			else
-			{
-				healAlly = bestHeal.mean();
-			}
-			if(Grid.distance(this,ally)>bestHeal.getRange()+this.getSpeed())
-			{
-				moveAndHeal =-1000;
-			}
-			else
-			{
-				moveAndHeal = bestHeal.mean();
+				if(Grid.distance(this,ally)>bestHeal.getRange())
+				{
+					healAlly =-1000; //infinito negativo;
+				}
+				else
+				{
+					healAlly = bestHeal.mean();
+				}
+				if(Grid.distance(this,ally)>bestHeal.getRange()+this.getSpeed())
+				{
+					moveAndHeal =-1000;
+				}
+				else
+				{
+					moveAndHeal = bestHeal.mean();
+				}
 			}
 		}
 		

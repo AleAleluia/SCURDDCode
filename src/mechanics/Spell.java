@@ -72,7 +72,7 @@ public class Spell {
 		modifier = Integer.parseInt(parser[1]);
 
 		int maxValue = typeOfDice*numberOfDice;
-		int mean = (typeOfDice + maxValue)/2 +modifier;
+		int mean = (numberOfDice + maxValue)/2 +modifier;
 		return mean;
 
 	}

@@ -24,21 +24,45 @@ public class MDps extends Character {
 		 */
 		ArrayList<Character> willAttack = new ArrayList<Character>();
 		ArrayList<Character> auxWillAttack = new ArrayList<Character>();
-
+		
+		boolean sameDist = false; // Flag para o caso de existirem alvos a uma mesma distancia, usada para fazer outras comparacoes
+		int sameDistCount = 0; // Contador para quantos inimigos estao a mesma distancia (min 2), so usado quando sameDist = true
 		//Análise do inimigo mais próximo
 		int distanceX=999999, distanceY=999999;
 		for(int i=0; i< team.size(); i++){
-			if ( (Math.abs(this.getPositionX() - team.get(i).getPositionX()) < distanceX) && ( Math.abs(this.getPositionY() - team.get(i).getPositionY()) < distanceY) ){
+			if ( (Math.abs(this.getPositionX() - team.get(i).getPositionX()) <= distanceX) && ( Math.abs(this.getPositionY() - team.get(i).getPositionY()) <= distanceY) ){
+				if((Math.abs(this.getPositionX() - team.get(i).getPositionX()) == distanceX) && ( Math.abs(this.getPositionY() - team.get(i).getPositionY()) == distanceY)){
+					sameDist = true; // Mais de um alvo a mesma distancia [a distancia mais proxima]
+					sameDistCount++; // adiciona alvos a mesma distancia
+				}else{
+					sameDist = false;
+					sameDistCount = 0; // Reseta para 0, para caso volte a existirem
+				}
 				willAttack.add(team.get(i));
-				distanceX = this.getPositionX() - team.get(i).getPositionX();
-				distanceY = this.getPositionY() - team.get(i).getPositionY();
+				distanceX = Math.abs(this.getPositionX() - team.get(i).getPositionX());
+				distanceY = Math.abs(this.getPositionY() - team.get(i).getPositionY());
+				/*System.out.println("EEEEEEETA PLEURA" + "\n" + //APAGAAAAAAAAAAAAAAAAR
+								   distanceX + " " + distanceY +"\n"+
+								   willAttack.get(i).getName());*/
 			}
 		}
-		if(willAttack.size() == 1)
+		if(willAttack.size() == 1){ // Caso so haja um, retorne o primeiro
 			return willAttack.get(0);
-
-		auxWillAttack = (ArrayList<Character>) willAttack.clone();
-		willAttack.clear();
+		}else{
+			if(!sameDist){ // Se nao houverem inimigos a mesma distancia [Apenas 1 mais proximo]
+				int position = willAttack.size() - 1; // Ultima posicao da lista [o mais perto]
+				return willAttack.get(position);
+			}else{ // Se houverem dois ou mais na mesma distancia
+				for(int i = willAttack.size() - 1; i > willAttack.size() - sameDistCount; i--){ // Percorre de tras pra frente, indo ate o ultimo com a mesma distancia
+					auxWillAttack.add(willAttack.get(i));
+				}
+				auxWillAttack = (ArrayList<Character>) willAttack.clone(); 
+				willAttack.clear();
+			}
+		}
+			
+		/*auxWillAttack = (ArrayList<Character>) willAttack.clone(); 
+		willAttack.clear();*/
 
 		//Análise do inimigo com o pior estado
 		willAttack = exist(auxWillAttack, 3, 0); //Se há alguém em Condition(0) Badly Wounded(3)
@@ -217,12 +241,13 @@ public class MDps extends Character {
 					mean = 0;
 					Spell heal = null;
 					// Escolha da melhor cura do suporte selecionado
-					for(int j = 0; j< allySup.spells.size(); j++){
-						if(allySup.spells.get(j).getType() == 1 && allySup.spells.get(j).mean() > mean) // Se o spell for do tipo cura (1) e tiver media >
+					for(int j = 0; j < allySup.spells.size()-1; j++){
+						if(allySup.spells.get(j).getType() == 1 && allySup.spells.get(j).mean() > mean){ // Se o spell for do tipo cura (1) e tiver media >
 							heal = spells.get(j);
 							mean = heal.mean();
+						}
 					}
-					moveToAlly = heal.mean(); // Recebe o valor da maior cura media dos supps
+					moveToAlly = mean; // Recebe o valor da maior cura media dos supps
 				}
 			}
 		} // Caso nao esteja gravemente ferido ou nao tenha supps vivos no time, moveToAlly permanece 0.
@@ -324,14 +349,16 @@ public class MDps extends Character {
 			}
 		}
 		// Para saber o valor de cada estrategia ao fim dos calculos de cada rodada (APAGAR)
-		/*System.out.println("////////\n" +
+		System.out.println("////////\n" +
 						   moveToAlly + "\n" +
 						   moveToEnemy + "\n" +
 						   attack + "\n" +
 						   "////////\n" +
 						   enemyMove + "\n" +
 						   enemyHeal + "\n" +
-						   enemyAttack);*/
+						   enemyAttack + "\n" +
+						   "////////\n" +
+						   choosenStrategy);
 		
 		switch(choosenStrategy){
 		default: // moveToAlly
