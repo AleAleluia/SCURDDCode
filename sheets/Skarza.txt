@@ -5,7 +5,7 @@ AC: 20
 Initiative: 8
 Size: s
 
-Speed: 4
+Speed: 1
 Fortitude: 4
 Reflexes: 9
 Will: 4

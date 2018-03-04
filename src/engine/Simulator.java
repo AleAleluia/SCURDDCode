@@ -233,12 +233,12 @@ public class Simulator {
         this.chars.get(2).setTeam('b');
         this.chars.get(3).setTeam('a');
         
-        //int[][] mapArray = GA_Map.geneticMap();
-        int[][] mapArray = new int[][]{{1,1,1,1,0,0,0,1,1},
+        int[][] mapArray = GA_Map.geneticMap();
+        /*int[][] mapArray = new int[][]{{1,1,1,1,0,0,0,1,1},
         {1,1,1,1,0,0,0,1,1},
         {0,0,1,1,1,0,1,1,1},
         {0,1,1,1,1,1,1,1,0},
-        {0,1,1,1,1,1,1,0,0}};
+        {0,1,1,1,1,1,1,0,0}};*/
         
         int xA = 0,yA=0;
         int xB=4;
