@@ -20,14 +20,14 @@ public class Support extends Character{
 	}
 	
 	public Character VerifyPriorityHealingTarget(ArrayList<Character> allies){
+		
 
 		if(this.getCondition() == 3)
 			return this;
-		
+
 		ArrayList<Character> temp = new ArrayList<Character>();
 		
 		temp = CheckHealth(3, allies);
-		
 						
 		if(temp.size() > 1)
 			temp = CheckRole(4, temp);
@@ -38,6 +38,7 @@ public class Support extends Character{
 			Character target = temp.get(0);
 			return target;
 		}else{
+			System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEETA PLEEEEEEEEEEEEEURA");
 			return null;
 		}
 	}
@@ -222,6 +223,9 @@ public class Support extends Character{
 		
 		if(letter.getCode()==1)
 		{
+			if(target == null){
+				System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEETA PLEEEEEEEEEEEEEURA2");
+			}
 			if(this.distanceTo(target.getPositionX(), target.getPositionY()) <= this.getSpeed()){
 				this.guidedActionHelp(target);
 				
@@ -310,12 +314,12 @@ public class Support extends Character{
 		if(this.getTeam()=='a')
 		{
 			ally = VerifyPriorityHealingTarget(grid.getTeamA());
-			enemy = VerifyPriorityHealingTarget(grid.getTeamB());
+			enemy = VerifyPriorityTarget(grid.getTeamB());
 		}
 		else
 		{
 			ally = VerifyPriorityHealingTarget(grid.getTeamB());
-			enemy = VerifyPriorityHealingTarget(grid.getTeamA());
+			enemy = VerifyPriorityTarget(grid.getTeamA());
 		}
 		
 		//Valores default das estrategias do jogador
