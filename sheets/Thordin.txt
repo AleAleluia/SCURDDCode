@@ -1,0 +1,22 @@
+Name: Thordin
+Role: 2
+HP: 32
+AC: 16
+Initiative: 3
+Size: m
+
+Speed: 3
+Fortitude: 8
+Reflexes: 4
+Will: 4
+
+Attacks:
+Name: Greataxe
+Range: 1
+Atk Bonus: 6
+Atk Dmg: 1d12+6
+Crit Chance: 20
+Crit Mult: 3
+Extra Dmg: 4
+
+Spells:

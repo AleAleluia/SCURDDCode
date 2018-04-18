@@ -85,7 +85,7 @@ public class Grid {
 
         System.out.println("Team " + ANSI_RED + "B" + ANSI_RESET + ":");
         for(int i = 0; i < this.teamB.size(); i++){
-            System.out.println((i+1) + ": " + this.teamB.get(i).getName() + ", " + this.teamA.get(i).characterRole());
+            System.out.println((i+1) + ": " + this.teamB.get(i).getName() + ", " + this.teamB.get(i).characterRole());
         }
         System.out.println("");
     }
@@ -231,7 +231,11 @@ public class Grid {
 
     public static double distance(Character current, Character target)
     {
-        return Math.hypot(current.getPositionX()-target.getPositionX(), current.getPositionY()-current.getPositionY());
+    	if(target != null){
+    		return Math.hypot(current.getPositionX()-target.getPositionX(), current.getPositionY()-current.getPositionY());
+    	}else{
+    		return 99999; // Infinity distance
+    	}
     }
 
     private void cleanVision(Character current, Character target) {

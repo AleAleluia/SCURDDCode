@@ -1,0 +1,29 @@
+Name: Gerald
+Role: 4
+HP: 21
+AC: 13
+Initiative: 2
+Size: m
+
+Speed: 3
+Fortitude: 5
+Reflexes: 2
+Will: 8
+
+Attacks:
+Name: Light Mace
+Range: 1
+Atk Bonus: 4
+Atk Dmg: 1d6+1
+Crit Chance: 20
+Crit Mult: 3
+Extra Dmg: 0
+
+Spells:
+Name: Cure Light Wounds
+Range: 1
+Cast Time: standard
+Type: 1
+Effect: 1d8+4
+Save: n
+Save DC: 0

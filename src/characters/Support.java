@@ -121,9 +121,12 @@ public class Support extends Character{
 		if(temp.size() > 1)
 			temp = CheckRole(role, temp);
 		
-		target = temp.get(0);
-		
-		return target;	
+		if(temp.size() > 0){
+			target = temp.get(0);
+			return target;
+		}else{
+			return null; //PRESTAR ATENÇÃO NISSO E COLOCAR "IF != NULL" ONDE NECESSARIO
+		}
 	}
 	
 	public Letter check(){
@@ -223,17 +226,16 @@ public class Support extends Character{
 		
 		if(letter.getCode()==1)
 		{
-			if(target == null){
-				System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEETA PLEEEEEEEEEEEEEURA2");
+			if(target != null){
+				if(this.distanceTo(target.getPositionX(), target.getPositionY()) <= this.getSpeed()){
+					this.guidedActionHelp(target);
+					
+					if(this.getTeam() == 'a'){
+						grid.mailBoxA.remove(letter);
+					}else{
+						grid.mailBoxB.remove(letter);
+					}
 			}
-			if(this.distanceTo(target.getPositionX(), target.getPositionY()) <= this.getSpeed()){
-				this.guidedActionHelp(target);
-				
-				if(this.getTeam() == 'a'){
-					grid.mailBoxA.remove(letter);
-				}else{
-					grid.mailBoxB.remove(letter);
-				}
 			}else{
 				normally();
 			}

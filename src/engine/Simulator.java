@@ -231,7 +231,7 @@ public class Simulator {
         this.chars.get(0).setTeam('a');
         this.chars.get(1).setTeam('a');
         this.chars.get(2).setTeam('b');
-        this.chars.get(3).setTeam('a');
+        this.chars.get(3).setTeam('b');
         
         int[][] mapArray = GA_Map.geneticMap();
         /*int[][] mapArray = new int[][]{{1,1,1,1,0,0,0,1,1},
@@ -319,7 +319,7 @@ public class Simulator {
         teamA.add(this.chars.get(0));
         teamA.add(this.chars.get(1));
         teamB.add(this.chars.get(2));
-        teamA.add(this.chars.get(3));
+        teamB.add(this.chars.get(3));
 
 
 
@@ -327,12 +327,17 @@ public class Simulator {
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        File f[] = new File[4
-                            ];
-        File a = new File("sheets/Spirilon Pirilampus.txt");
+        File f[] = new File[4];
+        /*File a = new File("sheets/Spirilon Pirilampus.txt");
         File b = new File("sheets/Skarza.txt");
         File c = new File("sheets/Big O'neil.txt");
-        File d = new File("sheets/Fred.txt");
+        File d = new File("sheets/Fred.txt");*/
+        
+        //NOVOS PERSONAGENS
+        File a = new File("sheets/Baragham.txt");
+        File b = new File("sheets/Gerald.txt");
+        File c = new File("sheets/Thordin.txt");
+        File d = new File("sheets/Sofia.txt");
         f[0] = a;
         f[1] = b;
         f[2] = c;
@@ -345,6 +350,8 @@ public class Simulator {
         //s.grid.printGrid();
         boolean verifyA = false;
         boolean verifyB = false;
+        int victoriesA = 0;
+        int victoriesB = 0;
         for(int i = 1; i <= simulations; i++){
         	System.out.println("\nSIMULACAO " + i + "\n");
         	Simulator s = new Simulator(f);
@@ -352,8 +359,8 @@ public class Simulator {
             s.grid.rollCharactersInitiative();
             //s.grid.printGrid();
 	        while(true){
-	        	verifyA = grid.verifyVictory(grid.getTeamA());
-	        	verifyB = grid.verifyVictory(grid.getTeamB());
+	        	verifyA = grid.verifyVictory(grid.getTeamB());
+	        	verifyB = grid.verifyVictory(grid.getTeamA());
 	        	if((verifyA) || (verifyB)){
 	        		break;
 	        	}
@@ -362,10 +369,15 @@ public class Simulator {
 	            //scanner.nextLine();
 	        }
 	        if(verifyA){
-	        	System.out.println("TeamB ganhou");
+	        	victoriesA++;
+	        	System.out.println("TeamA ganhou \n");
 	        }else{
-	        	System.out.println("TeamA ganhou");
+	        	victoriesB++;
+	        	System.out.println("TeamB ganhou \n");
 	        }
         }
+        System.out.println("ESTATÍSTICAS: \n"
+        				 + "Team A venceu: " + victoriesA +"\n"
+        				 + "Team B venceu: " + victoriesB);
     }
 }

@@ -1,0 +1,30 @@
+Name: Sofia
+Role: 2
+HP: 30
+AC: 16
+Initiative: 3
+Size: m
+
+Speed: 3
+Fortitude: 7
+Reflexes: 5
+Will: 3
+
+Attacks:
+Name: Short sword
+Range: 1
+Atk Bonus: 7
+Atk Dmg: 1d6+3
+Crit Chance: 19
+Crit Mult: 2
+Extra Dmg: 0
+
+Name: Short Bow
+Range: 6
+Atk Bonus: 5
+Atk Dmg: 1d6+0
+Crit Chance: 20
+Crit Mult: 3
+Extra Dmg: 0
+
+Spells:

@@ -1,0 +1,22 @@
+Name: Baragham
+Role: 2
+HP: 36
+AC: 18
+Initiative: 1
+Size: m
+
+Speed: 3
+Fortitude: 8
+Reflexes: 3
+Will: 5
+
+Attacks:
+Name: Heavy Mace
+Range: 1
+Atk Bonus: 7
+Atk Dmg: 1d8+3
+Crit Chance: 20
+Crit Mult: 3
+Extra Dmg: 0
+
+Spells:
