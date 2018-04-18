@@ -550,6 +550,11 @@ public abstract class Character {
 			// imprimir
 			System.out.println(target.getName() + " sofreu " + damage + " de dano para o " + atk.getName() + " de "
 					+ actor.getName());
+			//Funcao que remove o personagem morto do jogo
+			if(target.getHp()<=0)
+			{
+				grid.removeDead(target);
+			}
 		}
 
 		else {

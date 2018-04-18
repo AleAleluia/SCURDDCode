@@ -142,7 +142,7 @@ public class Grid {
     }
 
     public void callTurn(){
-    	if(this.currentCharacter.getHp() >= 0){
+    	if(this.currentCharacter.getHp() > 0){
     		//System.out.println(this.currentCharacter.getName()+" ira jogar");
             this.currentCharacter.play();
             int i = this.turnSequence.indexOf(this.currentCharacter);
@@ -688,4 +688,29 @@ public class Grid {
     public ArrayList<Character> getTeamB() {
 		return this.teamB;
 	}
+    
+    public void removeDead(Character target) {
+    	// TODO Auto-generated method stub
+    	if(target.getTeam() == 'a'){
+    		for(int i = 0; i < this.mailBoxA.size(); i++){  // Verifica se existe mensagem do personagem morto
+    			if(this.mailBoxA.get(i).getSender().equals(target.getName())){
+    				this.mailBoxA.remove(i); // Se existir, remova-a
+    				i--;
+    			}
+    		}
+    		this.teamA.remove(target);
+    	} else{
+    		for(int i = 0; i < this.mailBoxB.size(); i++){ // Verifica se existe mensagem do personagem morto
+    			if(this.mailBoxB.get(i).getSender().equals(target.getName())){
+    				this.mailBoxB.remove(i); // Se existir, remova-a
+    				i--;
+    			}
+    		}
+    		this.teamB.remove(target);
+    	}
+    	this.gridSquares[target.getPositionX()][target.getPositionY()].leaveSquare();
+    	this.gridSquares[target.getPositionX()][target.getPositionY()].setMapFlag(1);
+    	this.turnSequence.remove(target);
+    	//System.out.println(target.getName() + "has died a warrior death");
+    }
 }
