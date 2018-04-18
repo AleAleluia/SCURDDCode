@@ -178,8 +178,7 @@ public class Support extends Character{
 		Character target = null;
 		
 		if(this.getTeam() == 'a'){
-			if(letter.getCode()==1)
-			{
+			if(letter.getCode()==1){
 				ArrayList<Character> allyTeam = grid.getTeamA();
 				for(int i = 0; i < allyTeam.size(); i++){
 					if(allyTeam.get(i).getName().equals(letter.getSender())){
@@ -188,8 +187,7 @@ public class Support extends Character{
 					}
 				}
 			}
-			else
-			{
+			else{
 				ArrayList<Character> enemyTeam = grid.getTeamB();
 				for(int i = 0; i < enemyTeam.size(); i++){
 					if(enemyTeam.get(i).getName().equals(letter.getFocus())){
