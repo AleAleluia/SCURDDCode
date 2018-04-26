@@ -95,7 +95,6 @@ public class Support extends Character{
 		for (Character ally : allies)
 			if(ally.getRole() == role)
 				temp.add(ally);
-		
 		if(temp.isEmpty()){
 			ArrayList<Character> aux = new ArrayList<Character>(); 
 			aux = CheckHealth(role-1, allies);
@@ -107,17 +106,15 @@ public class Support extends Character{
 	}
 
 	public Character VerifyPriorityTarget(ArrayList<Character> enemies){
-		
 		ArrayList<Character> temp = new ArrayList<Character>();
 		Character target;
 		int cond = 1;
-		int role = 1;
+		int role = 4;
 
 		temp = CheckDistance(enemies);
 		
-		
 		if(temp.size() > 1)
-			temp = CheckHealth(3, enemies);
+			temp = CheckHealth(3, temp);
 		if(temp.size() > 1)
 			temp = CheckRole(role, temp);
 		
@@ -133,16 +130,13 @@ public class Support extends Character{
 		if(this.getTeam() == 'a'){
 			if(grid.getMailBoxA().size()!=0){
 				Letter pickedLetter = grid.getMailBoxA().get(0);
-				if(pickedLetter.getCode()==1)
-				{
+				if(pickedLetter.getCode()==1){
 					return pickedLetter;
 				}
-				else
-				{
+				else{
 					for(int i=1; i<grid.getMailBoxA().size(); i++){
 						
-						if(grid.getMailBoxA().get(i).getCode() == 1)
-						{
+						if(grid.getMailBoxA().get(i).getCode() == 1){
 							pickedLetter = grid.getMailBoxA().get(i);
 							return pickedLetter;
 						}
@@ -153,16 +147,13 @@ public class Support extends Character{
 		} else{
 			if(grid.getMailBoxB().size()!=0){
 				Letter pickedLetter = grid.getMailBoxB().get(0);
-				if(pickedLetter.getCode()==1)
-				{
+				if(pickedLetter.getCode()==1){
 					return pickedLetter;
 				}
-				else
-				{
+				else{
 					for(int i=1; i<grid.getMailBoxB().size(); i++){
 						
-						if(grid.getMailBoxB().get(i).getCode() == 1)
-						{
+						if(grid.getMailBoxB().get(i).getCode() == 1){
 							pickedLetter = grid.getMailBoxB().get(i);
 							return pickedLetter;
 						}
@@ -170,8 +161,7 @@ public class Support extends Character{
 					return pickedLetter;
 				}
 			}
-			else
-			{
+			else{
 				return null;
 			}
 		}
@@ -181,8 +171,7 @@ public class Support extends Character{
 		Character target = null;
 		
 		if(this.getTeam() == 'a'){
-			if(letter.getCode()==1)
-			{
+			if(letter.getCode()==1){
 				ArrayList<Character> allyTeam = grid.getTeamA();
 				for(int i = 0; i < allyTeam.size(); i++){
 					if(allyTeam.get(i).getName().equals(letter.getSender())){
@@ -202,8 +191,7 @@ public class Support extends Character{
 				}
 			}
 		}else{
-			if(letter.getCode()==1)
-			{
+			if(letter.getCode()==1){
 				ArrayList<Character> allyTeam = grid.getTeamB();
 				for(int i = 0; i < allyTeam.size(); i++){
 					if(allyTeam.get(i).getName().equals(letter.getSender())){
@@ -266,27 +254,22 @@ public class Support extends Character{
 
 		ArrayList<Spell> bestHeals = chooseSpells(ally);
 		//alvo muito longe
-		if(bestHeals.isEmpty())
-		{
+		if(bestHeals.isEmpty()){
 			this.moveTo(ally);
 			bestHeals = chooseSpells(ally);
 			//alvo ainda longe
-			if(bestHeals.isEmpty())
-			{
+			if(bestHeals.isEmpty()){
 				//mover segunda vez.
 				this.moveTo(ally);
 			}
-			else
-			{
+			else{
 				Spell chosenHeal = bestOfSpells(bestHeals);
 				magicAction(this,ally,chosenHeal);
 			}
 		}
-		else
-		{
+		else{
 			Spell chosenHeal = bestOfSpells(bestHeals);
-			if(chosenHeal!=null)
-			{
+			if(chosenHeal!=null){
 				magicAction(this,ally,chosenHeal);
 			}
 		}
@@ -313,13 +296,11 @@ public class Support extends Character{
 
 	private void normally() {
 		Character ally, enemy;
-		if(this.getTeam()=='a')
-		{
+		if(this.getTeam()=='a'){
 			ally = VerifyPriorityHealingTarget(grid.getTeamA());
 			enemy = VerifyPriorityTarget(grid.getTeamB());
 		}
-		else
-		{
+		else{
 			ally = VerifyPriorityHealingTarget(grid.getTeamB());
 			enemy = VerifyPriorityTarget(grid.getTeamA());
 		}
@@ -341,43 +322,36 @@ public class Support extends Character{
 		int enemyHeal=0;
 		
 		//checagem de condicoes
-		if(this.getCondition()==3)
-		{
+		if(this.getCondition()==3){
 			healSelf = bestHeal.mean();//se o personagem esta ferido, a acao de se curar e considerada
 		}
 		if(Grid.distance(this,enemy)>bestAttack.getRange())//verifica a distancia do inimigo alvo
 		{
 			attack =-1000; //infinito negativo;
 		}
-		else
-		{
+		else{
 			attack = bestAttack.mean();
 		}
 		if(Grid.distance(this,enemy)>bestAttack.getRange()+this.getSpeed())//verifica a distancia do inimigo apos uma acao de movimento
 		{
 			moveAndAttack =-1000;
 		}
-		else
-		{
+		else{
 			moveAndAttack = bestAttack.mean();
 		}
 		if(ally != null){
 			if(ally.getCondition()==3)//verifica se o aliado esta ferido e depois verifica sua distancia
 			{
-				if(Grid.distance(this,ally)>bestHeal.getRange())
-				{
+				if(Grid.distance(this,ally)>bestHeal.getRange()){
 					healAlly =-1000; //infinito negativo;
 				}
-				else
-				{
+				else{
 					healAlly = bestHeal.mean();
 				}
-				if(Grid.distance(this,ally)>bestHeal.getRange()+this.getSpeed())
-				{
+				if(Grid.distance(this,ally)>bestHeal.getRange()+this.getSpeed()){
 					moveAndHeal =-1000;
 				}
-				else
-				{
+				else{
 					moveAndHeal = bestHeal.mean();
 				}
 			}
@@ -396,78 +370,64 @@ public class Support extends Character{
 			//inicializar valores do inimigo
 			enemyAttack = bestDamageValue(enemy);
 			//compara todas as estrategias do suporte com as estrategias do inimigo e mantem a estretegia mais vantajosa.
-			if(attack-enemyMove>bestValue)
-			{
+			if(attack-enemyMove>bestValue){
 				bestValue = attack-enemyMove;
 				bestStrategy = 0;
 			}
-			if(attack-enemyAttack>bestValue)
-			{
+			if(attack-enemyAttack>bestValue){
 				bestValue = attack-enemyAttack;
 				bestStrategy = 0;
 			}
 			
-			if(moveAndAttack-enemyMove>bestValue)
-			{
+			if(moveAndAttack-enemyMove>bestValue){
 				bestValue = moveAndAttack-enemyMove;
 				bestStrategy = 1;
 			}
-			if(moveAndAttack-enemyAttack>bestValue)
-			{
+			if(moveAndAttack-enemyAttack>bestValue){
 				bestValue = moveAndAttack-enemyAttack;
 				bestStrategy = 1;
 			}
 			
-			if(moveToEnemy-enemyMove>bestValue)
-			{
+			if(moveToEnemy-enemyMove>bestValue){
 				bestValue = moveToEnemy-enemyMove;
 				bestStrategy = 2;
 			}
-			if(moveToEnemy-enemyAttack>bestValue)
-			{
+			if(moveToEnemy-enemyAttack>bestValue){
 				bestValue = moveToEnemy-enemyAttack;
 				bestStrategy = 2;
 			}
 			
-			if(healAlly-enemyMove>bestValue)
-			{
+			if(healAlly-enemyMove>bestValue){
 				bestValue = healAlly-enemyMove;
 				bestStrategy = 3;
 			}
-			if(healAlly-enemyAttack>bestValue)
-			{
+			if(healAlly-enemyAttack>bestValue){
 				bestValue = healAlly-enemyAttack;
 				bestStrategy = 3;
 			}
 			
-			if(moveAndHeal-enemyMove>bestValue)
-			{
+			if(moveAndHeal-enemyMove>bestValue){
 				bestValue = moveAndHeal-enemyMove;
 				bestStrategy = 4;
 			}
-			if(moveAndHeal-enemyAttack>bestValue)
-			{
+			if(moveAndHeal-enemyAttack>bestValue){
 				bestValue = moveAndHeal-enemyAttack;
 				bestStrategy = 4;
 			}
 			
-			if(moveToAlly-enemyMove>bestValue)
-			{
+			if(moveToAlly-enemyMove>bestValue){
 				bestValue = moveToAlly-enemyMove;
 				bestStrategy = 5;
 			}
-			if(moveToAlly-enemyAttack>bestValue)
-			{
+			if(moveToAlly-enemyAttack>bestValue){
 				bestValue = moveToAlly-enemyAttack;
 				bestStrategy = 5;
 			}
-			if(healSelf-enemyMove>bestValue)
-			{
+			if(healSelf-enemyMove>bestValue){
 				bestValue = healSelf-enemyMove;
 				bestStrategy = 6;
 			}
-			if(healSelf-enemyAttack>bestValue)
-			{
+			if(healSelf-enemyAttack>bestValue){
 				bestValue = healSelf-enemyAttack;
 				bestStrategy = 6;
 			}
@@ -477,104 +437,85 @@ public class Support extends Character{
 			enemyAttack = bestDamageValue(enemy);
 			enemyHeal = bestHealValue(enemy);
 			
-			if(attack-enemyMove>bestValue)
-			{
+			if(attack-enemyMove>bestValue){
 				bestValue = attack-enemyMove;
 				bestStrategy = 0;
 			}
-			if(attack-enemyAttack>bestValue)
-			{
+			if(attack-enemyAttack>bestValue){
 				bestValue = attack-enemyAttack;
 				bestStrategy = 0;
 			}
-			if(attack-enemyHeal>bestValue)
-			{
+			if(attack-enemyHeal>bestValue){
 				bestValue= attack-enemyHeal;
 				bestStrategy=0;
 			}
 			
-			if(moveAndAttack-enemyMove>bestValue)
-			{
+			if(moveAndAttack-enemyMove>bestValue){
 				bestValue = moveAndAttack-enemyMove;
 				bestStrategy = 1;
 			}
-			if(moveAndAttack-enemyAttack>bestValue)
-			{
+			if(moveAndAttack-enemyAttack>bestValue){
 				bestValue = moveAndAttack-enemyAttack;
 				bestStrategy = 1;
 			}
-			if(moveAndAttack-enemyHeal>bestValue)
-			{
+			if(moveAndAttack-enemyHeal>bestValue){
 				bestValue= moveAndAttack-enemyHeal;
 				bestStrategy=1;
 			}
 			
-			if(moveToEnemy-enemyMove>bestValue)
-			{
+			if(moveToEnemy-enemyMove>bestValue){
 				bestValue = moveToEnemy-enemyMove;
 				bestStrategy = 2;
 			}
-			if(moveToEnemy-enemyAttack>bestValue)
-			{
+			if(moveToEnemy-enemyAttack>bestValue){
 				bestValue = moveToEnemy-enemyAttack;
 				bestStrategy = 2;
 			}
-			if(moveToEnemy-enemyHeal>bestValue)
-			{
+			if(moveToEnemy-enemyHeal>bestValue){
 				bestValue= moveToEnemy-enemyHeal;
 				bestStrategy=2;
 			}
 			
-			if(healAlly-enemyMove>bestValue)
-			{
+			if(healAlly-enemyMove>bestValue){
 				bestValue = healAlly-enemyMove;
 				bestStrategy = 3;
 			}
-			if(healAlly-enemyAttack>bestValue)
-			{
+			if(healAlly-enemyAttack>bestValue){
 				bestValue = healAlly-enemyAttack;
 				bestStrategy = 3;
 			}
-			if(healAlly-enemyHeal>bestValue)
-			{
+			if(healAlly-enemyHeal>bestValue){
 				bestValue= healAlly-enemyHeal;
 				bestStrategy=3;
 			}
 			
-			if(moveAndHeal-enemyMove>bestValue)
-			{
+			if(moveAndHeal-enemyMove>bestValue){
 				bestValue = moveAndHeal-enemyMove;
 				bestStrategy = 4;
 			}
-			if(moveAndHeal-enemyAttack>bestValue)
-			{
+			if(moveAndHeal-enemyAttack>bestValue){
 				bestValue = moveAndHeal-enemyAttack;
 				bestStrategy = 4;
 			}
-			if(moveAndHeal-enemyHeal>bestValue)
-			{
+			if(moveAndHeal-enemyHeal>bestValue){
 				bestValue= moveAndHeal-enemyHeal;
 				bestStrategy=4;
 			}
 			
-			if(moveToAlly-enemyMove>bestValue)
-			{
+			if(moveToAlly-enemyMove>bestValue){
 				bestValue = moveToAlly-enemyMove;
 				bestStrategy = 5;
 			}
-			if(moveToAlly-enemyAttack>bestValue)
-			{
+			if(moveToAlly-enemyAttack>bestValue){
 				bestValue = moveToAlly-enemyAttack;
 				bestStrategy = 5;
 			}
-			if(moveToAlly-enemyHeal>bestValue)
-			{
+			if(moveToAlly-enemyHeal>bestValue){
 				bestValue= moveToAlly-enemyHeal;
 				bestStrategy=5;
 			}
 			
-			if(healSelf-enemyMove>bestValue)
-			{
+			if(healSelf-enemyMove>bestValue){
 				bestValue = healSelf-enemyMove;
 				bestStrategy = 6;
 			}
@@ -596,7 +537,7 @@ public class Support extends Character{
 			attack(enemy);
 			break;
 		case 1:
-			moveTo(enemy);
+			//moveTo será realizado no ataque.
 			attack(enemy);
 			break;
 		case 2:
@@ -801,12 +742,9 @@ public class Support extends Character{
 	
 	private ArrayList<Spell> chooseSpells(Character target) {
 		ArrayList<Spell> bestSpells = new ArrayList<Spell>();
-		for(int i=0;i<super.spells.size();i++)
-		{
-			if(super.spells.get(i).getType()==1)
-			{
-				if(grid.isInRange(this, target, super.spells.get(i)))
-				{
+		for(int i=0;i<super.spells.size();i++){
+			if(super.spells.get(i).getType()==2){
+				if(grid.isInRange(this, target, super.spells.get(i))){
 					bestSpells.add(super.spells.get(i));
 				}
 			}
@@ -847,29 +785,32 @@ public class Support extends Character{
 				{
 					bestAttack = bestOfAttacks(attacks);
 				}
-				if(bestSpell.mean()== bestAttack.mean())
+				if(bestSpell!=null)
 				{
-					if(bestSpell.getSave()!='n')
+					if(bestSpell.mean()== bestAttack.mean())
 					{
-						attackAction(this, target, bestAttack);
+						if(bestSpell.getSave()!='n')
+						{
+							attackAction(this, target, bestAttack);
+						}
+						else
+						{
+							magicAction(this,target,bestSpell);
+						}
 					}
-					else
+					if(bestSpell.mean()>bestAttack.mean())
 					{
 						magicAction(this,target,bestSpell);
 					}
-				}
-				if(bestSpell.mean()>bestAttack.mean())
-				{
-					magicAction(this,target,bestSpell);
-				}
-				else
-				{
-					attackAction(this, target, bestAttack);
-					if(target.getCondition() == 3){
-						if(this.getTeam() == 'a'){
-							grid.mailBoxA.add(new Letter(this.getName(), 2, target.getName()));
-						}else{
-							grid.mailBoxB.add(new Letter(this.getName(), 2, target.getName()));
+					else
+					{
+						attackAction(this, target, bestAttack);
+						if(target.getCondition() == 3){
+							if(this.getTeam() == 'a'){
+								grid.mailBoxA.add(new Letter(this.getName(), 2, target.getName()));
+							}else{
+								grid.mailBoxB.add(new Letter(this.getName(), 2, target.getName()));
+							}
 						}
 					}
 				}
@@ -944,10 +885,8 @@ public class Support extends Character{
 			return null;
 		}
 		Attack chosen = attacks.get(0);
-		for(int i=1;i<attacks.size();i++)
-		{
-			if(chosen.mean()<attacks.get(i).mean())
-			{
+		for(int i=1;i<attacks.size();i++){
+			if(chosen.mean()<attacks.get(i).mean()){
 				chosen = attacks.get(i);
 			}
 		}
@@ -955,24 +894,19 @@ public class Support extends Character{
 	}
 
 	private Spell bestOfSpells(ArrayList<Spell> bestSpells) {
-		if(bestSpells.size()<=0)
-		{
+		if(bestSpells.size()<=0){
 			return null;
 		}
 		Spell chosen = bestSpells.get(0);
-		for(int i=1;i<bestSpells.size();i++)
-		{
-			if(chosen.mean()<bestSpells.get(i).mean())
-			{
+		for(int i=1;i<bestSpells.size();i++){
+			if(chosen.mean()<bestSpells.get(i).mean()){
 				chosen = bestSpells.get(i);
 			}
 		}
-		if(allowedAction(chosen.getCastTimeInt()))
-		{
+		if(allowedAction(chosen.getCastTimeInt())){
 			return chosen;
 		}
-		else
-		{
+		else{
 			bestSpells.remove(chosen);
 			return bestOfSpells(bestSpells);
 		}
