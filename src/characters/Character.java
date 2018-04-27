@@ -23,7 +23,6 @@ public abstract class Character {
 	private int speed, fort, ref, will;
 	private int[] availableActions = new int[3];
 	
-	
 	//Lista de ataques
 	protected ArrayList<Attack> attacks;
 	//Lista de spells
@@ -545,6 +544,7 @@ public abstract class Character {
 				damage = damage * atk.getCritMult();
 			}
 			// modificar HP do alvo e atualiza condição
+			engine.Simulator.s.computeStatistics(actor.getName(), 1, damage); // Adicionando o dano nas estatisticas desse personagem
 			target.setHp(target.getHp() - damage);
 			target.setCondition();
 			// imprimir
@@ -592,10 +592,12 @@ public abstract class Character {
 
 		//diminui o hp se for magia de dano, aumenta vida.
 		if(spell.getType()== '0') {
+			engine.Simulator.s.computeStatistics(actor.getName(), 1, damage); // Adicionando o dano nas estatisticas desse personagem
 			target.setHp(target.getHp()-damage);
 			System.out.println(target.getName()+" sofreu "+damage+" de dano para o "+spell.getName()+" de "+actor.getName());
 		} else {
 			target.setHp(target.getHp()+damage);
+			engine.Simulator.s.computeStatistics(actor.getName(), 2, damage); // Adicionando a cura nas estatisticas desse personagem
 			System.out.println(target.getName()+" curou "+damage+" de dano com o "+spell.getName()+" de "+actor.getName());
 		}
 		target.setCondition();

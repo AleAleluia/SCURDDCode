@@ -21,6 +21,15 @@ public class Simulator {
     private File[] CharacterSheets;
     private ArrayList<Character> chars = new ArrayList<>();
     public static Grid grid;
+    public static Simulator s;
+    public static int simulations;
+    
+    //Contadores estatisticos
+    public static int victoriesA = 0;
+    public static int victoriesB = 0;
+    public static ArrayList<Statistics> stats = new ArrayList<Statistics>();
+    public static int teamASize;
+    public static int teamBSize;
 
     public Simulator(File[] CSheets) throws IOException {
         this.CharacterSheets = CSheets;
@@ -325,6 +334,39 @@ public class Simulator {
 
         this.grid = new Grid(teamA, teamB, 5, 9, mapArray);
     }
+    
+    public void computeStatistics(String name, int stat, int value){
+    	for(int i = 0; i < stats.size(); i++){
+    		if(stats.get(i).getName().equals(name)){
+    			switch(stat){
+    				case 1: // Damage
+    					stats.get(i).addTotalDamage(value);
+    					break;
+    				case 2: // Heal
+    					stats.get(i).addTotalHeal(value);
+    					break;
+    			}
+    		}
+    	}
+    }
+    
+    private void printStatistics(){
+    	System.out.println("ESTATISTICAS: \n"
+				 + "Team A venceu: " + victoriesA +"\n"
+				 + "Team B venceu: " + victoriesB + "\n");
+    	System.out.println("====== TEAM A ======\n");
+    	
+    	for(int i = 0; i < stats.size(); i++){
+    		if(i == teamASize){
+    			System.out.println("====== TEAM B ======\n");
+    		}
+    		System.out.println("===== " + stats.get(i).getName() + " =====");
+    		System.out.println("Dano total: " + stats.get(i).getTotalDamage());
+            System.out.println("Dano medio: " + stats.get(i).getAvgDamage());
+            System.out.println("Cura total: " + stats.get(i).getTotalHeal());
+            System.out.println("Cura media: " + stats.get(i).getAvgHeal() + "\n");
+    	}
+    }
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         File f[] = new File[4];
@@ -345,18 +387,20 @@ public class Simulator {
         
         Scanner scanner = new Scanner(System.in);
         System.out.println("Digite o numero de simulacoes:" );
-        int simulations = scanner.nextInt();
+        simulations = scanner.nextInt();
      
         //s.grid.printGrid();
         boolean verifyA = false;
         boolean verifyB = false;
-        int victoriesA = 0;
-        int victoriesB = 0;
+      
         for(int i = 1; i <= simulations; i++){
         	System.out.println("\nSIMULACAO " + i + "\n");
-        	Simulator s = new Simulator(f);
+        	s = new Simulator(f);
         	s.grid.printTeams();
             s.grid.rollCharactersInitiative();
+            teamASize = s.grid.getTeamA().size();
+            teamBSize = s.grid.getTeamB().size();
+            
             //s.grid.printGrid();
 	        while(true){
 	        	verifyA = grid.verifyVictory(grid.getTeamB());
@@ -376,8 +420,6 @@ public class Simulator {
 	        	System.out.println("TeamB ganhou \n");
 	        }
         }
-        System.out.println("ESTATÍSTICAS: \n"
-        				 + "Team A venceu: " + victoriesA +"\n"
-        				 + "Team B venceu: " + victoriesB);
+        s.printStatistics();
     }
 }

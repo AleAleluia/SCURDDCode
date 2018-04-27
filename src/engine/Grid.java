@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
-
+import engine.Simulator;
 /**
  * Created by Scariottis on 21/03/2017.
  */
@@ -33,6 +33,19 @@ public class Grid {
 	public Grid(ArrayList<Character> teamA, ArrayList<Character> teamB, int dimensionX, int dimensionY, int[][] mapArray){
         this.teamA = teamA;
         this.teamB = teamB;
+        
+        //Adicao da struct de estatisticas pessoais de cada personagem [Apenas na primeira criacao de grid]
+        if(engine.Simulator.s.stats.size() == 0){
+		    for(int i = 0; i < teamA.size(); i++){
+		    	Statistics a = new Statistics(teamA.get(i).getName());
+		    	engine.Simulator.s.stats.add(a);
+		    }
+		    for(int i = 0; i < teamB.size(); i++){
+		    	Statistics b = new Statistics(teamB.get(i).getName());
+		    	engine.Simulator.s.stats.add(b);
+		    }
+        }
+        
         gridSquares = new Square[dimensionX][dimensionY];
 
         generateGrid(dimensionX, dimensionY, mapArray);
