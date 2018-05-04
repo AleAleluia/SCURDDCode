@@ -11,17 +11,9 @@ Reflexes: 9
 Will: 4
 
 Attacks:
-Name: Dedo no olho
+Name: Dagger
 Range: 1
-Atk Bonus: 3
-Atk Dmg: 1d4+1
-Crit Chance: 19
-Crit Mult: 2
-Extra Dmg: 0
-
-Name: Apunhalar
-Range: 1
-Atk Bonus: 6 1
+Atk Bonus: 6
 Atk Dmg: 1d6+3
 Crit Chance: 19
 Crit Mult: 2

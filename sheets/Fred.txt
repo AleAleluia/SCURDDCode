@@ -28,18 +28,10 @@ Crit Mult: 2
 Extra Dmg: 0
 
 Spells:
-Name: Thunderbolt
-Range: 8
-Cast Time: standard
-Type: 0
-Effect: 3d8+10
-Save: r
-Save DC: 20
-
-Name: Heal
+Name: Cure Light Wounds
 Range: 1
 Cast Time: standard
 Type: 1
-Effect: 2d8+4
+Effect: 1d8+4
 Save: n
 Save DC: 0

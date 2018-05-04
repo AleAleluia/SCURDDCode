@@ -239,8 +239,12 @@ public class Simulator {
         
         this.chars.get(0).setTeam('a');
         this.chars.get(1).setTeam('a');
-        this.chars.get(2).setTeam('b');
-        this.chars.get(3).setTeam('b');
+        this.chars.get(2).setTeam('a');
+        this.chars.get(3).setTeam('a');
+        this.chars.get(4).setTeam('b');
+        this.chars.get(5).setTeam('b');
+        this.chars.get(6).setTeam('b');
+        this.chars.get(7).setTeam('b');
         
         int[][] mapArray = GA_Map.geneticMap();
         /*int[][] mapArray = new int[][]{{1,1,1,1,0,0,0,1,1},
@@ -324,12 +328,18 @@ public class Simulator {
         this.chars.get(1).setInitialPosition(1, 0);
         this.chars.get(2).setInitialPosition(1, 8);
         this.chars.get(3).setInitialPosition(0, 0);*/
-
+        
+        //TEAM A
         teamA.add(this.chars.get(0));
         teamA.add(this.chars.get(1));
-        teamB.add(this.chars.get(2));
-        teamB.add(this.chars.get(3));
-
+        teamA.add(this.chars.get(2));
+        teamA.add(this.chars.get(3));
+        
+        //TEAM B
+        teamB.add(this.chars.get(4));
+        teamB.add(this.chars.get(5));
+        teamB.add(this.chars.get(6));
+        teamB.add(this.chars.get(7));
 
 
         this.grid = new Grid(teamA, teamB, 5, 9, mapArray);
@@ -369,21 +379,31 @@ public class Simulator {
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        File f[] = new File[4];
+        File f[] = new File[8];
         /*File a = new File("sheets/Spirilon Pirilampus.txt");
         File b = new File("sheets/Skarza.txt");
         File c = new File("sheets/Big O'neil.txt");
         File d = new File("sheets/Fred.txt");*/
         
         //NOVOS PERSONAGENS
-        File a = new File("sheets/Baragham.txt");
-        File b = new File("sheets/Gerald.txt");
-        File c = new File("sheets/Thordin.txt");
-        File d = new File("sheets/Sofia.txt");
-        f[0] = a;
-        f[1] = b;
-        f[2] = c;
-        f[3] = d;
+        File a1 = new File("sheets/Baragham.txt");
+        File a2 = new File("sheets/Gerald.txt");
+        File a3 = new File("sheets/Thordin.txt");
+        File a4 = new File("sheets/Sofia.txt");
+        f[0] = a1;
+        f[1] = a2;
+        f[2] = a3;
+        f[3] = a4;
+        
+        //ANTIGOS PERSONAGENS
+        File b1 = new File("sheets/Fred.txt");
+        File b2 = new File("sheets/Spirilon Pirilampus.txt");
+        File b3 = new File("sheets/Big O'neil.txt");
+        File b4 = new File("sheets/Skarza.txt");
+        f[4] = b1;
+        f[5] = b2;
+        f[6] = b3;
+        f[7] = b4;
         
         Scanner scanner = new Scanner(System.in);
         System.out.println("Digite o numero de simulacoes:" );

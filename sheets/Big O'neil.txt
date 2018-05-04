@@ -1,37 +1,30 @@
 Name: Big O'neil
 Role: 2
-HP: 60
+HP: 42
 AC: 15
-Initiative: 6
-Size: l
+Initiative: 0
+Size: m
 
-Speed: 1
-Fortitude: 15
-Reflexes: 5
-Will: 11
+Speed: 3
+Fortitude: 8
+Reflexes: 4
+Will: 4
 
 Attacks:
-Name: Marretada "Treme-Terra"
+Name: Warhammer
 Range: 1
-Atk Bonus: 18 13 8
-Atk Dmg: 1d12+5
+Atk Bonus: 7
+Atk Dmg: 1d10+4
 Crit Chance: 20
 Crit Mult: 3
-Extra Dmg: 1d8+2
+Extra Dmg: 0
 
-Name: Besta, A Besta Bestial
+Name: Heavy Crossbow
 Range: 6
-Atk Bonus: 9 4
-Atk Dmg: 1d10+1
+Atk Bonus: 4
+Atk Dmg: 1d10+0
 Crit Chance: 19
 Crit Mult: 3
-Extra Dmg: 1d4+0
+Extra Dmg: 0
 
 Spells:
-Name: Magia Curativa que Costuma Curar
-Range: 1
-Cast Time: standard
-Type: 1
-Effect: 1d8+5
-Save: n
-Save DC: 0

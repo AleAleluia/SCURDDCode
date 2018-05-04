@@ -11,15 +11,15 @@ Reflexes: 3
 Will: 4
 
 Attacks:
-Name: Espadada do Cranco
+Name: Shortsword
 Range: 1
-Atk Bonus: 7 2
-Atk Dmg: 2d6+4
+Atk Bonus: 7
+Atk Dmg: 1d6+4
 Crit Chance: 19
 Crit Mult: 2
 Extra Dmg: 0
 
-Name: Facada Mafiosa
+Name: Dagger
 Range: 1
 Atk Bonus: 4
 Atk Dmg: 1d4+2
@@ -28,10 +28,3 @@ Crit Mult: 2
 Extra Dmg: 1d6+0
 
 Spells:
-Name: Bola de Fogo do Jeremias
-Range: 10
-Cast Time: standard
-Type: 0
-Effect: 6d8+49
-Save: r
-Save DC: 25
